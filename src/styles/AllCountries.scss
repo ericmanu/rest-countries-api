@@ -1,0 +1,14 @@
+.ac {
+    border: 1px solid;
+    margin: 3rem auto;
+    width: 90%;
+    height: auto;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 4.5rem 6.45rem;
+    .country-con {
+        width: 16.5rem;
+        height: 21rem;
+        border: 1px solid;
+    }
+}

@@ -1,18 +1,18 @@
 import "../styles/Home.scss"
-import Nav from "../components/Nav";
 import Search from "../components/Search";
 import Filter from "../components/Filter";
+import AllCountries from "../components/AllCountries";
 
 const Home = () => {
-    return ( 
+    return (
         <>
-            <Nav />
             <div className="sf">
                 <Search />
                 <Filter />
             </div>
+            <AllCountries />
         </>
-     );
+    );
 }
- 
+
 export default Home;
