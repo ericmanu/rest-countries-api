@@ -1,22 +1,26 @@
 import "../styles/AllCountries.scss"
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
-// Define the type for the data
-interface Country {
+interface CountryList {
   flag: string;
   name: string;
   population: number;
   region: string;
   capital: string;
-  // Add other properties here if needed
 }
 
-const AllCountries = () => {
-  const [data, setData] = useState<Country[]>([]); // Specify the type as Country[]
+interface AllCountriesProps {
+  searchTerm: string;
+  selectedRegion: string;
+}
+
+const AllCountries: React.FC<AllCountriesProps> = ({ searchTerm, selectedRegion }) => {
+  const [data, setData] = useState<CountryList[]>([]); // Specify the type as Country[]
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCountries = async () => {
       try {
         const response = await axios.get('https://restcountries.com/v2/all');
         setData(response.data);
@@ -26,15 +30,35 @@ const AllCountries = () => {
       }
     };
 
-    fetchData();
+    fetchCountries();
   }, []);
+
+  const CountryData = () => {
+    return data.filter((country) => {
+      const countryName = country.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const regionOfCountry = selectedRegion === 'All' || country.region === selectedRegion;
+      return countryName && regionOfCountry;
+    });
+  };
 
   return (
     <div className="ac">
-      {data.map(country => (
-        <div className="country-con">
-            <p key={country.name}>{country.name}</p>
-        </div>
+      {CountryData().map(country => (
+        <Link className="country-link" key={country.name} to={`/country/${country.name}`} >
+          <div className="country-con">
+            <div className="flag">
+              <img src={country.flag} alt="flag" />
+            </div>
+            <div className="details">
+              <p className="c-name" key={country.name}>{country.name}</p>
+              <div className="c-prc">
+                <p className="c-pop"><strong>Population:</strong> {country.population.toLocaleString()}</p>
+                <p className="c-reg"><strong>Region:</strong> {country.region}</p>
+                <p className="c-cap"><strong>Capital:</strong> {country.capital}</p>
+              </div>
+            </div>
+          </div>
+        </Link>
       ))}
     </div>
   );

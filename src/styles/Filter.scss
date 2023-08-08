@@ -1,7 +1,9 @@
 .filter {
     margin: 3rem 5rem 0;
+    
     // border: 1px black;
     select {
+        cursor: pointer;
         width: 12.5rem;
         height: 3.5rem;
         border: none;
