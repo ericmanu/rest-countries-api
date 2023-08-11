@@ -13,7 +13,9 @@
         &:focus {
             outline: none;
         }
-        
+        @media only screen and (max-width: 414px) and (min-width: 375px) {
+            margin: 0 -4rem;
+        }
     }
 }
 .dark-background {
