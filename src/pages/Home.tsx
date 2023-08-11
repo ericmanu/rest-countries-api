@@ -6,15 +6,15 @@ import { useState } from "react";
 
 const Home = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [selectedRegion, setSelectedRegion] = useState<string>('All');
+    const [regionFilter, setRegionFilter] = useState<string>('All');
 
     return (
         <>
             <div className="sf">
                 <Search value={searchTerm} onChange={setSearchTerm}/>
-                <Filter onChange={setSelectedRegion}/>
+                <Filter regionFilter={regionFilter} setRegionFilter={setRegionFilter} />
             </div>
-            <AllCountries searchTerm={searchTerm} selectedRegion={selectedRegion}/>
+            <AllCountries searchTerm={searchTerm} regionFilter={regionFilter}/>
         </>
     );
 }

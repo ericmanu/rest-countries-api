@@ -13,10 +13,10 @@ interface CountryList {
 
 interface AllCountriesProps {
   searchTerm: string;
-  selectedRegion: string;
+  regionFilter: string;
 }
 
-const AllCountries: React.FC<AllCountriesProps> = ({ searchTerm, selectedRegion }) => {
+const AllCountries: React.FC<AllCountriesProps> = ({ searchTerm, regionFilter }) => {
   const [data, setData] = useState<CountryList[]>([]); // Specify the type as Country[]
 
   useEffect(() => {
@@ -24,7 +24,6 @@ const AllCountries: React.FC<AllCountriesProps> = ({ searchTerm, selectedRegion 
       try {
         const response = await axios.get('https://restcountries.com/v2/all');
         setData(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -36,7 +35,7 @@ const AllCountries: React.FC<AllCountriesProps> = ({ searchTerm, selectedRegion 
   const CountryData = () => {
     return data.filter((country) => {
       const countryName = country.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const regionOfCountry = selectedRegion === 'All' || country.region === selectedRegion;
+      const regionOfCountry = regionFilter === 'All' || country.region === regionFilter;
       return countryName && regionOfCountry;
     });
   };

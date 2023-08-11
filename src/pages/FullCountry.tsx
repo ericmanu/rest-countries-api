@@ -21,19 +21,37 @@ export interface Country {
 const FullCountry: React.FC = () => {
   const [detaiiledCountry, setDetailedCountry] = useState<Country[]>([]);
   const { countryName } = useParams<{ countryName: string }>();
+  const [borderCountries, setBorderCountries] = useState<Country[]>([]);
 
   useEffect(() => {
     const fetchCountry = async () => {
       try {
         const response = await axios.get('https://restcountries.com/v2/all');
         setDetailedCountry(response.data);
-        console.log(response.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching country:', error);
       }
     };
     fetchCountry();
   }, []);
+
+  useEffect(() => {
+    const fetchBorderCountries = async () => {
+      try {
+        const selectedCountry = detaiiledCountry.find(country => country.name === countryName);
+        if (selectedCountry && selectedCountry.borders && selectedCountry.borders.length > 0) {
+          const borderAlphaCodes = selectedCountry.borders.join(',');
+          const borderResponse = await axios.get<Country[]>(
+            `https://restcountries.com/v2/alpha?codes=${borderAlphaCodes}`
+          );
+          setBorderCountries(borderResponse.data);
+        }
+      } catch (error) {
+        console.error('Error fetching border countries:', error);
+      }
+    };
+    fetchBorderCountries();
+  }, [countryName, detaiiledCountry]);
 
   return (
     <div className="fcc">
@@ -66,6 +84,24 @@ const FullCountry: React.FC = () => {
                         <p><strong>Top Level Domain:</strong> {country.topLevelDomain}</p>
                         <p><strong>Currencies:</strong> {country.currencies.map(currency => currency.code)}</p>
                         <p><strong>Languages:</strong> {country.languages.map(language => language.name).join(", ")}</p>
+                      </div>
+                    </div>
+                    <div className="border-countries">
+                        <strong style={{width: '9rem', marginTop: '.2rem'}}>Border Countries:</strong>
+                        
+                        <div className="border-list">
+                          {borderCountries.length > 0
+                            ? borderCountries.map((borderCountry) => (
+                                <Link
+                                  key={borderCountry.name}
+                                  to={`/country/${borderCountry.name}`}
+                                  className="border-country-link"
+                                >
+                                  {borderCountry.name}
+                                </Link>
+                              ))
+                            : "No border country found"}
+                       
                       </div>
                     </div>
                   </div>

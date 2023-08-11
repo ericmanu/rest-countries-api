@@ -9,3 +9,7 @@ body{
     font-family: "Nunito Sans", sans-serif;
     font-style: normal;
 }
+
+.dark-background{
+    background: #202C36;
+}

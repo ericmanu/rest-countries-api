@@ -1,0 +1,30 @@
+button {
+    margin-right: 5rem;
+    border: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    height: 1.375rem;
+    background: #fff;
+    cursor: pointer;
+    span {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+    .icon {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+    @media screen and (max-width:414px) {
+        .togglemode {
+            margin-right: 1.94rem;
+        }
+    }
+}
+.dark-background {
+    .togglemode{
+        color: #fff;
+        background: #2B3844;
+    }
+}

@@ -21,6 +21,19 @@
     }
     
 }
+.dark-background {
+  .search-icon {
+    color: #fff;
+  }
+  input {
+    background:  #2B3844;
+    color: #fff;
+  }
+  .search input::placeholder {
+    color: white;
+  }
+  
+}
 
 /* 
 .search {

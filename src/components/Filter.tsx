@@ -1,18 +1,27 @@
+import React, { useEffect } from 'react';
 import "../styles/Filter.scss";
 
 interface FilterProps {
-    onChange: (region: string) => void;
+    regionFilter: string;
+    setRegionFilter: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Filter: React.FC<FilterProps> = ({onChange}) => {
+const Filter: React.FC<FilterProps> = ({ regionFilter, setRegionFilter }) => {
+    useEffect(() => {
+        const storedRegion = localStorage.getItem('selectedRegion');
+        const initialRegion = storedRegion || 'All';
+        setRegionFilter(initialRegion);
+    }, [setRegionFilter]);
 
     const handleRegionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        onChange(e.target.value);
+        const region = e.target.value;
+        setRegionFilter(region);
+        localStorage.setItem('selectedRegion', region);
     }
 
     return ( 
         <div className="filter">
-            <select name="region" id="region" onChange={handleRegionChange}>
+            <select name="region" id="region" onChange={handleRegionChange} value={regionFilter}>
                 <option value="All">Filter by Region</option>
                 <option value="Africa">Africa</option>
                 <option value="Americas">America</option>
