@@ -90,6 +90,54 @@
       }
     }
   }
+  @media only screen and (max-width: 425px) and (min-width: 375px) {
+    margin-left: 1.75rem;
+    .btn-link {
+      .back {
+        width: 6.5rem;
+        .arrow-left {
+          width: 1.125rem;
+          height: 1.125rem;
+        }
+        h6 {
+          font-size: 0.875rem;
+        }
+      }
+    }
+    .country-full {
+        margin-top: 4rem;
+        .c-con-element {
+            display: block;
+            .country-flags {
+                width: 20rem;
+                height: 17rem;
+              }
+              img {
+                width: 20rem;
+                height: 17rem;
+                border-radius: 0.5rem;
+              }
+              .c-details-con {
+                width: 20rem;
+                height: auto;
+                .country-name {
+                    font-size: 1.375rem;
+                    margin-top: 1.5rem;
+                }
+                .c-details-flex {
+                    flex-direction: column;
+                    font-size: 0.875rem;
+                    .c-details-two {
+                        margin-top: 2rem;
+                    }
+                }
+                .border-countries {
+                    flex-direction: column;
+                }
+              }
+        }
+    }
+  }
 }
 .dark-background {
   .btn-link .back {

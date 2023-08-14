@@ -16,12 +16,16 @@ button {
         width: 1.25rem;
         height: 1.25rem;
     }
-    @media screen and (max-width:414px) {
-        .togglemode {
+    @media only screen and (max-width: 425px) and (min-width:375px) {
             margin-right: 1.94rem;
-        }
+            height: 1.0625rem;
+            margin-top: .2rem;
+            span {
+                font-size: 0.75rem;
+            }
     }
 }
+
 .dark-background {
     .togglemode{
         color: #fff;

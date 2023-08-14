@@ -4,4 +4,9 @@ body {
         display: flex;
         justify-content: space-between;
     }
+    @media only screen and (max-width: 425px) and (min-width: 375px) {
+        .sf {
+            display: block;
+        }
+    }
 }

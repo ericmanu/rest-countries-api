@@ -17,7 +17,7 @@ interface AllCountriesProps {
 }
 
 const AllCountries: React.FC<AllCountriesProps> = ({ searchTerm, regionFilter }) => {
-  const [data, setData] = useState<CountryList[]>([]); // Specify the type as Country[]
+  const [data, setData] = useState<CountryList[]>([]);
 
   useEffect(() => {
     const fetchCountries = async () => {
