@@ -18,7 +18,7 @@
       justify-content: space-between;
       .dropdown-icon {
         margin-left: 8px;
-        font-size: 15px;
+        font-size: 16px;
         transition: transform 0.3s;
 
         &.open {
@@ -59,6 +59,9 @@
         font-size: 0.75rem;
         padding-top: 0.88rem;
     }
+    .options {
+        top: 3.5rem;
+    }
   }
 }
 .dark-background {
@@ -68,7 +71,6 @@
     }
     .options {
         background: #2B3844; 
-        color: #fff; 
-        top: 3.4rem;
+        color: #fff;  
     }
 }
