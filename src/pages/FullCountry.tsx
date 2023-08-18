@@ -2,7 +2,7 @@ import "../styles/FullCountry.scss";
 import { GoArrowLeft } from 'react-icons/go';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
 interface Country {
   flag: string;
@@ -19,15 +19,18 @@ interface Country {
 }
 
 const FullCountry: React.FC = () => {
-  const [detaiiledCountry, setDetailedCountry] = useState<Country[]>([]);
+  const [detailedCountry, setDetailedCountry] = useState<Country[]>([]);
   const { countryName } = useParams<{ countryName: string }>();
   const [borderCountries, setBorderCountries] = useState<Country[]>([]);
+  const previousCountry = useNavigate();
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchCountry = async () => {
       try {
         const response = await axios.get('https://restcountries.com/v2/all');
         setDetailedCountry(response.data);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching country:', error);
       }
@@ -38,7 +41,7 @@ const FullCountry: React.FC = () => {
   useEffect(() => {
     const fetchBorderCountries = async () => {
       try {
-        const selectedCountry = detaiiledCountry.find(country => country.name === countryName);
+        const selectedCountry = detailedCountry.find(country => country.name === countryName);
         if (selectedCountry && selectedCountry.borders && selectedCountry.borders.length > 0) {
           const borderAlphaCodes = selectedCountry.borders.join(',');
           const borderResponse = await axios.get<Country[]>(
@@ -51,19 +54,23 @@ const FullCountry: React.FC = () => {
       }
     };
     fetchBorderCountries();
-  }, [countryName, detaiiledCountry]);
+  }, [countryName, detailedCountry]);
 
   return (
     <div className="fcc">
-      <Link to="/" className="btn-link">
-        <button className="back">
-          <GoArrowLeft className='arrow-left' />
-          <h6>Back</h6>
-        </button>
-      </Link>
+      {/* <Link to="/" className="btn-link"> */}
+      <button className="back" onClick={() => { previousCountry(-1) }}>
+        <GoArrowLeft className='arrow-left' />
+        <h6>Back</h6>
+      </button>
+      {/* </Link> */}
       <div className="country-full">
-        {
-          detaiiledCountry.map(country => {
+        {loading ? (
+          <div className="loading-spinner-container">
+            <div className="loading-spinner"></div>
+          </div>
+        ) : (
+          detailedCountry.map(country => {
             if (country.name === countryName) {
               return (
                 <div key={country.name} className='c-con-element'>
@@ -87,29 +94,28 @@ const FullCountry: React.FC = () => {
                       </div>
                     </div>
                     <div className="border-countries">
-                        <strong style={{width: '9rem', marginTop: '.2rem'}}>Border Countries:</strong>
-                        
-                        <div className="border-list">
-                          {borderCountries.length > 0
-                            ? borderCountries.map((borderCountry) => (
-                                <Link
-                                  key={borderCountry.name}
-                                  to={`/country/${borderCountry.name}`}
-                                  className="border-country-link"
-                                >
-                                  {borderCountry.name}
-                                </Link>
-                              ))
-                            : "No border country found"}
-                       
+                      <strong style={{ width: '9rem', marginTop: '.2rem' }}>Border Countries:</strong>
+                      <div className="border-list">
+                        {borderCountries.length > 0
+                          ? borderCountries.map((borderCountry) => (
+                            <Link
+                              key={borderCountry.name}
+                              to={`/country/${borderCountry.name}`}
+                              className="border-country-link"
+                            >
+                              {borderCountry.name}
+                            </Link>
+                          ))
+                          : "No border country found"}
                       </div>
                     </div>
                   </div>
                 </div>
-              )
+              );
             }
+            return null;
           })
-        }
+        )}
       </div>
     </div>
   );
